@@ -12,8 +12,11 @@ amplitude       = 0.02;
 fft_size        = 1024;
 fft_overlap     = 256;
 
-wav = Modulate(FS, freq_lower, freq_upper, symbol_duration, msg);
+wav = Modulate(FS, NCARRIERS, freq_lower, freq_upper, symbol_duration, msg);
 wav = amplitude * wav;
 
 spectrogram(wav, hamming(fft_size), fft_overlap, fft_size);
 sound(wav, FS);
+
+% Save to audio file
+% audiowrite('modulated.wav', wav, FS);
