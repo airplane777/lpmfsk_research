@@ -6,6 +6,7 @@ function [waveform] = Modulate(fs, ncarriers, freq_lower, freq_upper, symbol_dur
   assert(message_size(1) == 1, 'Message is not a row vector.');
   for i = 1 : message_size(2)
     assert(message(i) >= 1 && message(i) <= ncarriers, 'Symbol range overflow.');
-    waveform = [waveform, Symbol_Gen(fs, symbol_freq(message(i)), symbol_duration)];
+    next_symbol = Symbol_Gen(fs, symbol_freq(message(i)), symbol_duration);
+    waveform = [waveform, next_symbol];
   end;
 end
