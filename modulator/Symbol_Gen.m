@@ -4,8 +4,8 @@ function [waveform] = Symbol_Gen(fs, freq, duration)
   if isempty(phase)
     phase = 0; % Initial phase
   end
-  time = 0 : 1 / fs : duration;
-  waveform = sin(2 * pi * freq * (time + phase));
-  phase = asin(waveform(end)); % No sudden phase change
+  time = 0 : 1 / fs : duration - 1 / fs;
+  waveform = sin(2 * pi * freq * time + phase);
+  phase = asin(sin(2 * pi * freq * duration + phase)); % No sudden phase change
 end
 
