@@ -14,6 +14,8 @@ wav = Modulate(FS, NCARRIERS, baud_rate, bottom_freq, TONE_SPC, msg);
 wav = amplitude * wav;
 
 % Plot, play and save the result
-spectrogram(wav, hamming(FFT_SIZE), FFT_OVERLAP, FFT_SIZE);
+% spectrogram(wav, hamming(FFT_SIZE), FFT_OVERLAP, FFT_SIZE);
+wf = Waterfall(FS, wav, FFT_SIZE, FFT_SHIFT);
+imagesc(wf)
 sound(wav, FS);
 % audiowrite('modulated.wav', wav, FS);
