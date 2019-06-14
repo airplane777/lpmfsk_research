@@ -2,7 +2,7 @@
 Configure;
 
 % Modulation parameters
-bottom_freq     = 5000;
+bottom_freq     = 1000;
 baud_rate       = 10;   % symbols per second
 amplitude       = 0.5;
 message_length  = 50;   % symbols
