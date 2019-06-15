@@ -3,7 +3,7 @@ Configure;
 
 % Load audio file
 % real_audio = audioread('../signal/mixed.wav');
-real_audio = audioread('../dataset/indoor_noisy.wav');
+real_audio = audioread('../dataset/indoor_near.wav');
 
 % Convert stereo into mono(for recorded files)
 real_audio_size = size(real_audio);
