@@ -3,15 +3,13 @@ Configure;
 
 % Modulation parameters
 bottom_freq     = 1000;
-baud_rate       = 10;   % symbols per second
-amplitude       = 0.5;
-message_length  = 50;   % symbols
+amplitude       = 0.1;
 
 % Generate random message
-msg = randi([1 NCARRIERS], 1, message_length);
+msg = randi([1 NCARRIERS], 1, MSG_LENGTH);
 
 % Modulate message
-wav = Modulate(FS, NCARRIERS, baud_rate, bottom_freq, TONE_SPC, msg);
+wav = Modulate(FS, NCARRIERS, BAUD_RATE, bottom_freq, TONE_SPC, msg);
 wav = amplitude * wav;
 
 % Plot spectrogram

@@ -1,9 +1,7 @@
 % Run after variable wf is generated.
 
 smooth_length = 70;
-
 wf_size = size(wf);
-
 int_time = zeros(wf_size(1), 1);
 int_freq = zeros(wf_size(2), 1);
 
@@ -38,5 +36,5 @@ int_freq_smooth = smoothdata(int_freq, 'movmean', smooth_length);
 subplot(2, 2, 3)
 plot(int_freq_smooth)
 xlim([1 wf_size(2)])
-title('Projection on  axis(smoothed)')
+title('Projection on time axis(smoothed)')
 
