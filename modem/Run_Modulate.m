@@ -2,11 +2,11 @@
 Configure;
 
 % Modulation parameters
-bottom_freq     = 1000;
-amplitude       = 0.1;
+bottom_freq     = 10000;
+amplitude       = 0.3;
 
-% Generate random message
-msg = randi([1 NCARRIERS], 1, MSG_LENGTH);
+% Generate random message and add header pattern
+msg = [HEADER_PATTERN, randi([1 NCARRIERS], 1, MSG_LENGTH)];
 
 % Modulate message
 wav = Modulate(FS, NCARRIERS, BAUD_RATE, bottom_freq, TONE_SPC, msg);
