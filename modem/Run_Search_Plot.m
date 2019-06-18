@@ -1,5 +1,4 @@
 figure;
-hold on;
 imagesc(wf)
 for i = 1 : search_range(1)
   for j = 1 : search_range(2)
@@ -8,7 +7,6 @@ for i = 1 : search_range(1)
       end
   end
 end
-hold off;
 
 figure;
 imagesc(1 ./ heatmap)
