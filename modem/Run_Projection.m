@@ -19,6 +19,7 @@ end
 
 subplot(2, 2, 1)
 imagesc(wf)
+title('Spectrogram')
 
 subplot(2, 2, 2)
 plot(int_time)

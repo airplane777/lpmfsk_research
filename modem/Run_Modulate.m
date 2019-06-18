@@ -2,8 +2,8 @@
 Configure;
 
 % Modulation parameters
-bottom_freq     = 10000;
-amplitude       = 0.3;
+bottom_freq     = 700;
+amplitude       = 0.4;
 
 % Generate random message and add header pattern
 msg = [HEADER_PATTERN, randi([1 NCARRIERS], 1, MSG_LENGTH)];
@@ -19,5 +19,5 @@ imagesc(wf)
 % Play and save audio
 sound(wav, FS);
 % id = 1;
-% filename = sprintf("%d_f%.2f_br%.2f_amp%.2f.wav", id, bottom_freq, baud_rate, amplitude);
+% filename = sprintf("%d_f%.2f_br%.2f_amp%.2f.wav", id, bottom_freq, BAUD_RATE, amplitude);
 % audiowrite(filename, wav, FS);
