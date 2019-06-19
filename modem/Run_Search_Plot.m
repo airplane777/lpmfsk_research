@@ -1,3 +1,5 @@
+decision_threshold = 140;
+
 figure;
 imagesc(wf)
 for i = 1 : search_range(1)
@@ -8,5 +10,5 @@ for i = 1 : search_range(1)
   end
 end
 
-figure;
-imagesc(1 ./ heatmap)
+% figure;
+% mesh(heatmap)

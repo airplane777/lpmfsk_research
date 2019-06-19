@@ -2,7 +2,6 @@
 Configure;
 
 % Parameters
-decision_threshold = 100;
 % bw_threshold = 0.91;
 
 % Generate header template
