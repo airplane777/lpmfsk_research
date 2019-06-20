@@ -13,7 +13,7 @@ HEADER_PATTERN = [1 1 1 1 1 1 1 1 NCARRIERS 1 NCARRIERS 1 NCARRIERS 1 NCARRIERS 
 % Transform
 FFT_SIZE  = 4410; % FFT window length
                   % Resolution of waterfall on frequency axis
-FFT_SHIFT = 1000; % FFT window shift step
+FFT_SHIFT = 2000; % FFT window shift step
                   % Resolution of waterfall on time axis
 
 
