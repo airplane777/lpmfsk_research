@@ -9,5 +9,5 @@ function [waveform] = Modulate(fs, ncarriers, baud_rate, bottom_freq, tone_spaci
     assert(message(i) >= 1 && message(i) <= ncarriers, 'Symbol range overflow.');
     next_symbol = Symbol_Gen(fs, symbol_freq(message(i)), symbol_duration);
     waveform = [waveform, next_symbol];
-  end;
+  end
 end

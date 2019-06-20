@@ -6,15 +6,15 @@ int_time = zeros(wf_size(1), 1);
 int_freq = zeros(wf_size(2), 1);
 
 for i = 1 : wf_size(1)
-    for j = 1 : wf_size(2)
-        int_time(i) = int_time(i) + wf(i, j);
-    end
+  for j = 1 : wf_size(2)
+    int_time(i) = int_time(i) + wf(i, j);
+  end
 end
 
 for j = 1 : wf_size(2)
-    for i = 1 : wf_size(1)
-        int_freq(j) = int_freq(j) + wf(i, j);
-    end
+  for i = 1 : wf_size(1)
+    int_freq(j) = int_freq(j) + wf(i, j);
+  end
 end
 
 subplot(2, 2, 1)

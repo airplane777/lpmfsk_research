@@ -17,7 +17,7 @@ function [wfall2d] = Waterfall(fs, waveform, window_size, window_shift)
   end
 
   wfall2d = wfall2d(1: floor(window_size / 2), :);
-  wfall2d = mat2gray(wfall2d);
+  wfall2d = Normalise(wfall2d);
 
 end
 

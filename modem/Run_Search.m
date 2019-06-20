@@ -43,7 +43,8 @@ for i = 1 : search_range(1)
     % box = imbinarize(box, bw_threshold);
     heatmap(i, j) = Diff_2d(box, header_template);
   end
-  fprintf("Scanning row %d of %d\n", i, search_range(1));
+  if mod(i, 100) == 0
+    fprintf("Scanning row %d of %d\n", i, search_range(1));
+  end
 end
 toc;
-

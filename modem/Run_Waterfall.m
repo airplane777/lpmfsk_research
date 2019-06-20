@@ -8,7 +8,7 @@ real_audio = audioread('../dataset/indoor_noisy.wav');
 % Convert stereo into mono(for recorded files)
 real_audio_size = size(real_audio);
 if real_audio_size(2) > 1
-    real_audio = real_audio(:, 1);
+  real_audio = real_audio(:, 1);
 end
 
 % Compute spectrogram
