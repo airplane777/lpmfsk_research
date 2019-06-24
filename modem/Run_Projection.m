@@ -1,5 +1,4 @@
 % Run after variable wf is generated.
-
 smooth_length = 70;
 wf_size = size(wf);
 int_time = zeros(wf_size(1), 1);
