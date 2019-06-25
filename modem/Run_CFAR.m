@@ -32,4 +32,22 @@ for i = 1 : bg_range(1)
 end
 noise_map = noise_map ./ (bg_window_size(1) * bg_window_size(2) - (bg_window_size(1) - train_size(1)) * (bg_window_size(2) - train_size(2)));
 
+% Generate SNR map
+fprintf("Computing SNR map...\n");
+snr_map = zeros(wf_size - cell_size);
+cell_area = cell_size(1) * cell_size(2);
+
+for i = 1 : wf_size(1) - cell_size(1)
+  for j = 1 : wf_size(2) - cell_size(2)
+    box = wf(i : i + cell_size(1), j : j + cell_size(2));
+    snr_map(i, j) = Int_2D(box);
+    nmap_pos(1) = Constrain(i - guard_size(1), 1, bg_range(1));
+    nmap_pos(2) = Constrain(j - guard_size(2), 1, bg_range(2));
+    snr_map(i, j) = snr_map(i, j) ./ (cell_area .* noise_map(nmap_pos(1), nmap_pos(2)));
+  end
+  if mod(i, 10) == 0
+    fprintf("Scanning row %d of %d\n", i, wf_size(1) - cell_size(1));
+  end
+end
+
 
