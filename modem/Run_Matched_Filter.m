@@ -19,7 +19,7 @@ header_template = header_template( ...
 
 % Regulate template
 header_template = Normalise(header_template);
-% header_template = imbinarize(header_template, bw_threshold);
+% header_template = imbinarize(header_template, 0.9);
 
 % Check generated template
 % imagesc(header_template)
@@ -33,7 +33,7 @@ tic;
 for i = 1 : search_range(1)
   for j = 1 : search_range(2)
     box = wf(i : i + template_size(1) - 1, j : j + template_size(2) - 1);
-    box = Normalise(box);
+    % box = Normalise(box);
     heatmap(i, j) = Diff_2d(box, header_template);
   end
   if mod(i, 10) == 0
