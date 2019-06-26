@@ -27,7 +27,7 @@ for i = 1 : bg_range(1)
     noise_map(i, j) = Int_2D(box);
   end
   if mod(i, 10) == 0
-    w = waitbar(i / bg_range(1))
+    w = waitbar(i / bg_range(1));
   end
 end
 noise_map = noise_map ./ (bg_window_size(1) * bg_window_size(2) - (bg_window_size(1) - train_size(1)) * (bg_window_size(2) - train_size(2)));

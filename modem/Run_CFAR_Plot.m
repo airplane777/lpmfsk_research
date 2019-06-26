@@ -21,7 +21,7 @@ for i = peak_search_size + 1 : wf_size(1) - peak_search_size
     end
     if detected_flag == true
       ntgt = ntgt + 1;
-      rectangle('Position', [j - cell_size(2) / 2, i - cell_size(1) / 2, cell_size(2), cell_size(1)], 'EdgeColor', 'w')
+      rectangle('Position', [j , i , cell_size(2), cell_size(1)], 'EdgeColor', 'r')
     end
   end
   w = waitbar(i / (wf_size(1) - peak_search_size));

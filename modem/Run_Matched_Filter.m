@@ -36,7 +36,7 @@ for i = 1 : search_range(1)
     box = Normalise(box);
     heatmap(i, j) = Diff_2d(box, header_template);
   end
-  if mod(i, 100) == 0
+  if mod(i, 10) == 0
     w = waitbar(i / search_range(1));
   end
 end
