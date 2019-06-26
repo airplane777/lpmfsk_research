@@ -37,7 +37,9 @@ for i = 1 : search_range(1)
     heatmap(i, j) = Diff_2d(box, header_template);
   end
   if mod(i, 100) == 0
-    fprintf("Scanning row %d of %d\n", i, search_range(1));
+    w = waitbar(i / search_range(1));
   end
 end
 toc;
+
+close(w);
