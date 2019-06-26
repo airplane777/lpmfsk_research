@@ -1,12 +1,13 @@
-function [result] = Constrain(org, low, high)
+function [result] = Constrain(val, low, high)
 % Constrain array into range
-  if org < low
+  if val < low
     result = low;
-  else if org > high
-         result = high;
-       else
-         result = org;
-       end
+  else
+    if val > high
+      result = high;
+    else
+      result = val;
+    end
   end
 
 end
