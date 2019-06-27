@@ -5,7 +5,7 @@ Configure;
 wf_size      = size(wf); % Size of entire waterfall
 header_size  = size(HEADER_PATTERN);
 guard_margin = [0.5 0.1];    % Size of guard/train area multiplied by cell size
-train_margin = [2 0.3];
+train_margin = [1 0.3];
 cell_size    = [floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE)) ...
                 floor((FS * (MSG_LENGTH + header_size(2))) / (FFT_SHIFT * BAUD_RATE)) ...
                ];

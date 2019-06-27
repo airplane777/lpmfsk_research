@@ -1,4 +1,4 @@
-decision_threshold = 50;
+decision_threshold = 10;
 
 figure;
 imagesc(wf)
