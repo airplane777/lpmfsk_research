@@ -16,5 +16,6 @@ wf = Waterfall(real_audio, FFT_SIZE, FFT_SHIFT);
 
 % Keep target band only
 wf = wf(TGT_BAND(1) / (FS / FFT_SIZE) : TGT_BAND(2) / (FS / FFT_SIZE), :);
+wf = GAIN .* wf;
 
 imagesc(Amp_To_dB(wf));

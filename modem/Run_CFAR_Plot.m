@@ -1,6 +1,5 @@
 % Binarise SNR map
-decision_threshold = 1.5;
-fprintf("Generating binarised map...\n");
+decision_threshold = 3;
 snr_map_bin = zeros(wf_size - cell_size);
 for i = 1 : wf_size(1) - cell_size(1)
   for j = 1 : wf_size(2) - cell_size(2)
@@ -20,7 +19,7 @@ colorbar;
 title("Original Spectrogram");
 
 subplot(2, 2, 2);
-imagesc(Amp_To_dB(noise_map));
+imagesc(Pwr_To_dB(noise_map));
 colorbar;
 title("Map of background noise");
 
