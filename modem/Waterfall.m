@@ -1,4 +1,4 @@
-function [wfall2d] = Waterfall(fs, waveform, window_size, window_shift)
+function [wfall2d] = Waterfall(waveform, window_size, window_shift)
 % Generate 2D waterfall diagram(spectrogram) of given sequence
 
   window = hamming(window_size); % Hamming window
@@ -15,7 +15,7 @@ function [wfall2d] = Waterfall(fs, waveform, window_size, window_shift)
   for i = 1 : ncycles
     subseq_start = (i - 1) * window_shift + 1;
     subseq_end = subseq_start + window_size - 1;
-    wfall2d(:, i) = 20*log(abs(fft(window .* waveform(subseq_start: subseq_end))));
+    wfall2d(:, i) = abs(fft(window .* waveform(subseq_start: subseq_end)));
     w = waitbar(i / ncycles);
   end
 

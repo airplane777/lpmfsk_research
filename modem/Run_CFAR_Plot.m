@@ -1,49 +1,34 @@
-% Analyse data
-% Parameters
-peak_search_size = 200; % pixels
-
-figure;
-imagesc(wf);
-ntgt = 0;
-for i = peak_search_size + 1 : wf_size(1) - peak_search_size
-  for j = peak_search_size + 1 : wf_size(2) - peak_search_size
-    detected_flag = true;
-    for mask_i = i - peak_search_size : i + peak_search_size
-      for mask_j = j - peak_search_size : j + peak_search_size
-        if wf(mask_i, mask_j) > wf(i, j)
-          detected_flag = false;
-          break
-        end
-      end
-      if detected_flag == false
-        break
-      end
-    end
-    if detected_flag == true
-      ntgt = ntgt + 1;
-      rectangle('Position', [j , i , cell_size(2), cell_size(1)], 'EdgeColor', 'r')
+% Binarise SNR map
+decision_threshold = 1.5;
+fprintf("Generating binarised map...\n");
+snr_map_bin = zeros(wf_size - cell_size);
+for i = 1 : wf_size(1) - cell_size(1)
+  for j = 1 : wf_size(2) - cell_size(2)
+    if snr_map(i, j) >= decision_threshold
+      snr_map_bin(i, j) = 1;
+    else
+      snr_map_bin(i, j) = 0;
     end
   end
-  w = waitbar(i / (wf_size(1) - peak_search_size));
 end
 
-close(w);
-
 % Plot data
-
 figure;
 subplot(2, 2, 1);
-imagesc(wf);
+imagesc(Amp_To_dB(wf));
+colorbar;
 title("Original Spectrogram");
 
 subplot(2, 2, 2);
-imagesc(noise_map);
+imagesc(Amp_To_dB(noise_map));
+colorbar;
 title("Map of background noise");
 
 subplot(2, 2, 3);
-imagesc(snr_map);
+imagesc(Amp_To_dB(snr_map));
+colorbar;
 title("Map of target SNR");
 
 subplot(2, 2, 4);
-mesh(snr_map);
-title("3D view of target SNR");
+imagesc(snr_map_bin);
+title("CFAR result");

@@ -13,8 +13,8 @@ wav = Modulate(FS, NCARRIERS, BAUD_RATE, bottom_freq, TONE_SPC, msg);
 wav = amplitude * wav;
 
 % Plot spectrogram
-wf = Waterfall(FS, wav, FFT_SIZE, FFT_SHIFT);
-imagesc(wf)
+wf = Waterfall(wav, FFT_SIZE, FFT_SHIFT);
+imagesc(Amp_To_dB(wf));
 
 % Play and save audio
 sound(wav, FS);
