@@ -22,17 +22,17 @@ axis([0 3e-3 0 10000]);
 % Plot data
 figure;
 subplot(2, 2, 1);
-imagesc(Amp_To_dB(wf));
+imagesc(amp2db(wf));
 colorbar;
 title("Original Spectrogram");
 
 subplot(2, 2, 2);
-imagesc(Pwr_To_dB(noise_map));
+imagesc(pwr2db(noise_map));
 colorbar;
 title("Map of background noise");
 
 subplot(2, 2, 3);
-imagesc(Amp_To_dB(snr_map));
+imagesc(amp2db(snr_map));
 colorbar;
 title("Map of target SNR");
 

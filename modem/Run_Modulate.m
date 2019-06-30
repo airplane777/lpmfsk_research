@@ -14,7 +14,7 @@ wav = amplitude * wav;
 
 % Plot spectrogram
 wf = Waterfall(wav, FFT_SIZE, FFT_SHIFT);
-imagesc(Amp_To_dB(wf));
+imagesc(amp2db(wf));
 
 % Play and save audio
 sound(wav, FS);
