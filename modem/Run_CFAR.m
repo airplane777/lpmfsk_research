@@ -22,7 +22,7 @@ noise_map      = zeros(bg_range);
 for i = 1 : bg_range(1)
   for j = 1 : bg_range(2)
     box = wfp(i : i + bg_window_size(1) - 1, j : j + bg_window_size(2) - 1);
-    box(train_size(1) : train_size(1) + 2 * guard_size(1) + cell_size(1) - 1, train_size(2) : train_size(2) + 2 .* guard_size(2) + cell_size(2) - 1) ...
+    box(train_size(1) : train_size(1) + 2 * guard_size(1) + cell_size(1) - 1, train_size(2) : train_size(2) + 2 * guard_size(2) + cell_size(2) - 1) ...
     = zeros(2 .* guard_size + cell_size);
     noise_map(i, j) = Int_2D(box);
   end
