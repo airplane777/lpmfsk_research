@@ -36,10 +36,8 @@ plot(int_freq)
 xlim([1 testbox_size(2)])
 title('Projection on time axis')
 
-int_freq_smooth = smoothdata(int_freq, 'movmean', smooth_length);
-
 subplot(2, 2, 4)
-plot(int_freq_smooth)
-xlim([1 testbox_size(2)])
-title('Projection on time axis(smoothed)')
+findpeaks(int_time, 'npeaks', NCARRIERS, 'sortstr', 'descend');
+[peak_vals, peak_locs] = findpeaks(int_time, 'npeaks', NCARRIERS, 'sortstr', 'descend');
+title('Peak detection')
 
