@@ -1,8 +1,10 @@
-testbox_position = [1095 467];
-% testbox_position = [525 1230];
+% testbox_position = [1095 467];
+ testbox_position = [525 1230];
 
-testbox = wfp(testbox_position(1): testbox_position(1) + cell_size(1), ...
-  testbox_position(2): testbox_position(2) +cell_size(2));
+% testbox = wfp(testbox_position(1): testbox_position(1) + cell_size(1), ...
+%   testbox_position(2): testbox_position(2) +cell_size(2));
+
+testbox = accepted_frame(:, :, 2);
 
 smooth_length = 70;
 testbox_size = size(testbox);
