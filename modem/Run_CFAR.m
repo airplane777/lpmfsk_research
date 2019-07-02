@@ -2,10 +2,11 @@
 Configure;
 
 % CFAR parameters
+cell_margin  = 0.2;
 wf_size      = size(wf);  % Size of entire waterfall
 guard_margin = [0.5 0.1]; % Size of guard/train area multiplied by cell size
 train_margin = [1 0.3];
-cell_size    = [floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE)) ...
+cell_size    = [floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE) * (1 + cell_margin)) ...
                 floor((FS * MSG_LENGTH) / (FFT_SHIFT * BAUD_RATE)) ...
                ];
                           % Size of guard/train area in pixels
