@@ -15,7 +15,6 @@ train_size   = floor(train_margin .* cell_size);
 
 % Generate background noise heatmap(power)
 fprintf("Computing background noise profile...\n");
-wfp  = wf.^2;
 bg_window_size = cell_size + 2 .* (guard_size + train_size);
 bg_range       = wf_size - bg_window_size;
 noise_map      = zeros(bg_range);
