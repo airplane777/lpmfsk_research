@@ -5,6 +5,7 @@ accepted_frame = zeros(cell_size(1), cell_size(2), 100);
 
 % Parameters
 loc_var_threshold = 0.500;
+min_peak_height = 0.1;
 
 for i = 1 : wf_size(1) - cell_size(1)
   for j = 1 : wf_size(2) - cell_size(2)
@@ -22,7 +23,14 @@ for i = 1 : wf_size(1) - cell_size(1)
       [peak_vals, peak_locs] = findpeaks(proj, 'npeaks', NCARRIERS, 'sortstr', 'descend');
       % Make decision
       peak_locs_size = size(peak_locs);
-      if peak_locs_size(1) == NCARRIERS
+      % Count peaks above threshold
+      npeak = 0;
+      for peak_i = 1 : peak_locs_size
+        if peak_vals(peak_i) >= min_peak_height * max(peak_vals)
+          npeak = npeak + 1;
+        end
+      end
+      if npeak == NCARRIERS
         peak_locs = sort(peak_locs);
         delta = zeros(NCARRIERS - 1, 1);
         for delta_i = 1 : NCARRIERS - 1

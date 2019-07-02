@@ -40,6 +40,5 @@ title('Projection on time axis')
 
 subplot(2, 2, 4)
 findpeaks(int_time, 'npeaks', NCARRIERS, 'sortstr', 'descend');
-[peak_vals, peak_locs] = findpeaks(int_time, 'npeaks', NCARRIERS, 'sortstr', 'descend');
 title('Peak detection')
 
