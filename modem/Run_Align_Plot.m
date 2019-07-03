@@ -1,4 +1,4 @@
-aligned_plot_size = 6;
+aligned_plot_size = 5;
 
 figure;
 for i = 1 : aligned_plot_size ^ 2
