@@ -3,7 +3,7 @@
 % Parameters
 loc_var_threshold = 0.500;
 min_peak_int_height = 0.100;
-cell_centre_error = 0.550;
+cell_centre_error = 0.000;
 
 accepted_counter = 0;
 accepted_frame = zeros(cell_size(1), cell_size(2), 100);

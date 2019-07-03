@@ -1,8 +1,10 @@
-%  testbox_position = [575 300];
-% testbox = wfp(testbox_position(1): testbox_position(1) + cell_size(1), ...
-%   testbox_position(2): testbox_position(2) +cell_size(2));
+% testbox_position = [616 260]; % Quiet
+testbox_position = [135 755];
 
-testbox = accepted_frame(:, :, 2);
+testbox = wfp(testbox_position(1) : testbox_position(1) + cell_size(1), ...
+  testbox_position(2) : testbox_position(2) + cell_size(2));
+
+% testbox = accepted_frame(:, :, 2);
 
 testbox_size = size(testbox);
 int_time = zeros(testbox_size(1), 1);
@@ -14,9 +16,11 @@ for i = 1 : testbox_size(1)
   end
 end
 
+[peak_int_vals, peak_int_locs] = findpeaks(proj, 'npeaks', NCARRIERS, 'sortstr', 'descend');
+peak_int_locs_size = size(peak_int_locs);
 for j = 1 : testbox_size(2)
-  for i = 1 : testbox_size(1)
-    int_freq(j) = int_freq(j) + testbox(i, j);
+  for i = 1 : peak_int_locs_size(1)
+    int_freq(j) = int_freq(j) + testbox(peak_int_locs(i), j);
   end
 end
 
