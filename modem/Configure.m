@@ -11,7 +11,7 @@ GAIN       = 1;     % RX gain
 % Transform
 FFT_SIZE  = 4410;         % FFT window length
                           % Resolution of waterfall on frequency axis
-FFT_SHIFT = 1000;         % FFT window shift step
+FFT_SHIFT = 882;          % FFT window shift step
                           % Resolution of waterfall on time axis
-TGT_BAND  = [1000 14000]; % Detection target frequency band
+TGT_BAND  = [1500 12000]; % Detection target frequency band
 

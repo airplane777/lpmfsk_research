@@ -1,12 +1,11 @@
 % testbox_position = [1095 467];
- testbox_position = [525 1230];
+ testbox_position = [575 300];
 
-% testbox = wfp(testbox_position(1): testbox_position(1) + cell_size(1), ...
-%   testbox_position(2): testbox_position(2) +cell_size(2));
+testbox = wfp(testbox_position(1): testbox_position(1) + cell_size(1), ...
+  testbox_position(2): testbox_position(2) +cell_size(2));
 
-testbox = accepted_frame(:, :, 2);
+% testbox = accepted_frame(:, :, 2);
 
-smooth_length = 70;
 testbox_size = size(testbox);
 int_time = zeros(testbox_size(1), 1);
 int_freq = zeros(testbox_size(2), 1);
@@ -42,3 +41,18 @@ subplot(2, 2, 4)
 findpeaks(int_time, 'npeaks', NCARRIERS, 'sortstr', 'descend');
 title('Peak detection')
 
+% Test demodulation
+demod_waveform = zeros(1, testbox_size(2));
+for j = 1 : testbox_size(2)
+  [peak_demod_val, peak_demod_loc] = max(testbox(:, j));
+  demod_waveform(j) = peak_demod_loc;
+end
+
+figure
+hold on;
+axis manual;
+imagesc(pwr2db(testbox));
+axis([0 wf_size(2) 0 wf_size(1)]);
+plot(demod_waveform, 'Color', 'red');
+axis([0 testbox_size(2) 0 testbox_size(1)]);
+hold off;
