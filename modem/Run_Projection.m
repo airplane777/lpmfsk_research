@@ -1,10 +1,8 @@
-% testbox_position = [1095 467];
- testbox_position = [575 300];
+%  testbox_position = [575 300];
+% testbox = wfp(testbox_position(1): testbox_position(1) + cell_size(1), ...
+%   testbox_position(2): testbox_position(2) +cell_size(2));
 
-testbox = wfp(testbox_position(1): testbox_position(1) + cell_size(1), ...
-  testbox_position(2): testbox_position(2) +cell_size(2));
-
-% testbox = accepted_frame(:, :, 2);
+testbox = accepted_frame(:, :, 2);
 
 testbox_size = size(testbox);
 int_time = zeros(testbox_size(1), 1);

@@ -2,12 +2,12 @@
 Configure;
 
 % CFAR parameters
-cell_margin  = 0.1;
+cell_margin  = 0.050;
 wf_size      = size(wf);  % Size of entire waterfall
-guard_margin = [0.5 0.1]; % Size of guard/train area multiplied by cell size
-train_margin = [1 0.3];
-cell_size    = [floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE) * (1 + cell_margin)) ...
-                floor((FS * MSG_LENGTH) / (FFT_SHIFT * BAUD_RATE)) ...
+guard_margin = [0.1 0.1]; % Size of guard/train area multiplied by cell size
+train_margin = [0.8 0.3];
+cell_size    = [1 + floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE) * (1 + cell_margin)) ...
+                1 + floor((FS * MSG_LENGTH) / (FFT_SHIFT * BAUD_RATE)) ...
                ];
                           % Size of guard/train area in pixels
 guard_size   = floor(guard_margin .* cell_size);
@@ -23,7 +23,7 @@ for i = 1 : bg_range(1)
   for j = 1 : bg_range(2)
     box = wfp(i : i + bg_window_size(1) - 1, j : j + bg_window_size(2) - 1);
     box(train_size(1) : train_size(1) + 2 * guard_size(1) + cell_size(1) - 1, train_size(2) : train_size(2) + 2 * guard_size(2) + cell_size(2) - 1) ...
-    = zeros(2 .* guard_size + cell_size);
+    = ones(2 .* guard_size + cell_size);
     noise_map(i, j) = Int_2D(box);
   end
   if mod(i, 10) == 0

@@ -1,12 +1,15 @@
 % Run after CFAR finished
 
-accepted_counter = 0;
-accepted_frame = zeros(cell_size(1), cell_size(2), 100);
-
 % Parameters
 loc_var_threshold = 0.500;
-% loc_avg_threshold = 0.100;
-min_peak_int_height = 0.1;
+min_peak_int_height = 0.100;
+cell_centre_error = 0.550;
+
+accepted_counter = 0;
+accepted_frame = zeros(cell_size(1), cell_size(2), 100);
+cell_centre = cell_size(1) / 2;
+cell_centre_range = [round(cell_centre * (1 - cell_centre_error)) round(cell_centre * (1 + cell_centre_error))];
+
 
 for i = 1 : wf_size(1) - cell_size(1)
   for j = 1 : wf_size(2) - cell_size(2)
@@ -38,11 +41,13 @@ for i = 1 : wf_size(1) - cell_size(1)
           delta(delta_i) = peak_int_locs(delta_i + 1) - peak_int_locs(delta_i);
         end % Calculate delta loc
         loc_var = var(delta); % Calculate delta loc variance
-        if loc_var <= loc_var_threshold % ACCEPT!
-          accepted_counter = accepted_counter + 1;
-          accepted_frame(:, :, accepted_counter) = box(:, :);
+        if loc_var <= loc_var_threshold % All carriers in frame, now check if they are centred
+          if round(mean(peak_int_locs)) >= cell_centre_range(1) && round(mean(peak_int_locs)) <= cell_centre_range(2) 
+            accepted_counter = accepted_counter + 1;
+            accepted_frame(:, :, accepted_counter) = box(:, :);
+          end % If centred
         end % If varience satisfied
-      end % If NCAR peak_ints detected
+      end % If NCAR peaks detected
     end % If CFAR detected
   end
   w = waitbar(i / (wf_size(1) - cell_size(1)));
