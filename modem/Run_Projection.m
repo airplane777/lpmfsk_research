@@ -16,7 +16,7 @@ for i = 1 : testbox_size(1)
   end
 end
 
-[peak_int_vals, peak_int_locs] = findpeaks(proj, 'npeaks', NCARRIERS, 'sortstr', 'descend');
+[peak_int_vals, peak_int_locs] = findpeaks(int_time, 'npeaks', NCARRIERS, 'sortstr', 'descend');
 peak_int_locs_size = size(peak_int_locs);
 for j = 1 : testbox_size(2)
   for i = 1 : peak_int_locs_size(1)
