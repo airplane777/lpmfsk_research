@@ -3,7 +3,7 @@
 % Parameters
 loc_var_threshold = 0.500;
 min_peak_int_height = 0.100;
-time_sync_kavg = 0.200;
+time_sync_kavg = 0.100;
 
 accepted_counter = 0;
 accepted_frame = zeros(cell_size(1), cell_size(2), 100);
