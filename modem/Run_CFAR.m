@@ -2,12 +2,13 @@
 Configure;
 
 % CFAR parameters
-cell_margin  = [0.100 0.400]; % Frequency, Time
+cell_margin  = [0.100 0.050]; % Frequency, Time
 wf_size      = size(wf);  % Size of entire waterfall
 guard_margin = [0.1 0.1]; % Size of guard/train area multiplied by cell size
-train_margin = [0.8 0.3];
+train_margin = [0.6 0.2];
+msg_length   = DATA_LENGTH + 1 + floor(DATA_LENGTH / SYNC_INTERVAL);
 cell_size    = [1 + floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE) * (1 + cell_margin(1))) ...
-                1 + floor((FS * MSG_LENGTH) / (FFT_SHIFT * BAUD_RATE) * (1 + cell_margin(2))) ...
+                1 + floor((FS * msg_length) / (FFT_SHIFT * BAUD_RATE) * (1 + cell_margin(2))) ...
                ];
                           % Size of guard/train area in pixels
 guard_size   = floor(guard_margin .* cell_size);
@@ -24,7 +25,7 @@ for i = 1 : bg_range(1)
     box = wfp(i : i + bg_window_size(1) - 1, j : j + bg_window_size(2) - 1);
     box(train_size(1) : train_size(1) + 2 * guard_size(1) + cell_size(1) - 1, train_size(2) : train_size(2) + 2 * guard_size(2) + cell_size(2) - 1) ...
     = zeros(2 .* guard_size + cell_size);
-    noise_map(i, j) = Int_2D(box);
+    noise_map(i, j) = sum(sum(box));
   end
   if mod(i, 10) == 0
     w = waitbar(i / bg_range(1));
@@ -40,7 +41,7 @@ cell_area = cell_size(1) * cell_size(2);
 for i = 1 : wf_size(1) - cell_size(1)
   for j = 1 : wf_size(2) - cell_size(2)
     box = wfp(i : i + cell_size(1) - 1, j : j + cell_size(2) - 1);
-    snr_map(i, j) = Int_2D(box);
+    snr_map(i, j) = sum(sum(box));
     nmap_pos(1) = Constrain(i - guard_size(1) - train_size(1), 1, bg_range(1));
     nmap_pos(2) = Constrain(j - guard_size(2) - train_size(1), 1, bg_range(2));
     snr_map(i, j) = snr_map(i, j) ./ (cell_area .* noise_map(nmap_pos(1), nmap_pos(2)));
