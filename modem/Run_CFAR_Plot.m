@@ -14,10 +14,10 @@ end
 
 close(w);
 
-% Generate histogram
-figure;
-histogram(wfp);
-axis([0 3e-3 0 10000]);
+% % Generate histogram
+% figure;
+% histogram(wfp);
+% axis([0 3e-3 0 10000]);
 
 % Plot data
 figure;

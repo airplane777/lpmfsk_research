@@ -5,7 +5,7 @@ Configure;
 bottom_freq     = 2000;
 amplitude       = 0.5;
 
-% Generate random message and add header pattern
+% Generate random message
 msg = [randi([1 NCARRIERS], 1, MSG_LENGTH)];
 
 % Modulate message
