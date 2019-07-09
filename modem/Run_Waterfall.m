@@ -3,7 +3,7 @@ Configure;
 
 % Load audio file
 % real_audio = audioread('../signal/mixed.wav');
-real_audio = audioread('../dataset/gen_3/snr_high_music.wav');
+real_audio = audioread('../dataset/gen_4/mixed.wav');
 
 % Convert stereo into mono(for recorded files)
 real_audio_size = size(real_audio);

@@ -2,8 +2,8 @@
 Configure;
 
 % Modulation parameters
-bottom_freq     = 2000;
-amplitude       = 0.5;
+bottom_freq     = 1000;
+amplitude       = 0.2;
 
 % Generate random message
 data = randi([1 NCARRIERS], 1, DATA_LENGTH);
@@ -36,5 +36,5 @@ imagesc(amp2db(wf));
 % Play and save audio
 % sound(wav, FS);
 % id = id + 1
-filename = sprintf("%d_f%.2f_br%.2f_amp%.2f.wav", id, bottom_freq, BAUD_RATE, amplitude);
-audiowrite(filename, wav, FS);
+% filename = sprintf("%d_f%.2f_br%.2f_amp%.2f.wav", id, bottom_freq, BAUD_RATE, amplitude);
+% audiowrite(filename, wav, FS);
