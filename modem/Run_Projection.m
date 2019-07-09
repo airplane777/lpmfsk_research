@@ -1,5 +1,5 @@
 % testbox_position = [616 260]; % Quiet
-testbox_position = [135 755];
+testbox_position = [450 1390];
 
 testbox = wfp(testbox_position(1) : testbox_position(1) + cell_size(1), ...
   testbox_position(2) : testbox_position(2) + cell_size(2));
@@ -24,6 +24,7 @@ for j = 1 : testbox_size(2)
   end
 end
 
+figure
 subplot(2, 2, 1)
 imagesc(testbox)
 title('Spectrogram')
