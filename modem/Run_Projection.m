@@ -1,10 +1,4 @@
-% testbox_position = [616 260]; % Quiet
-testbox_position = [450 1390];
-
-testbox = wfp(testbox_position(1) : testbox_position(1) + cell_size(1), ...
-  testbox_position(2) : testbox_position(2) + cell_size(2));
-
-% testbox = accepted_frame(:, :, 2);
+Select_Frame;
 
 testbox_size = size(testbox);
 int_time = zeros(testbox_size(1), 1);
