@@ -2,11 +2,13 @@
 Configure;
 
 % CFAR parameters
-cell_margin  = [0.100 0.050]; % Frequency, Time
+cell_margin  = [0.000 0.000]; % Frequency, Time
+guard_margin = [0.100 0.050]; % Size of guard/train area multiplied by cell size
+train_margin = [0.600 0.200];
+
 wf_size      = size(wf);  % Size of entire waterfall
-guard_margin = [0.1 0.1]; % Size of guard/train area multiplied by cell size
-train_margin = [0.6 0.2];
-msg_length   = DATA_LENGTH + 1 + floor(DATA_LENGTH / SYNC_INTERVAL);
+sync_length = floor(DATA_LENGTH / SYNC_INTERVAL) + 1;
+msg_length   = DATA_LENGTH + sync_length;
 cell_size    = [1 + floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE) * (1 + cell_margin(1))) ...
                 1 + floor((FS * msg_length) / (FFT_SHIFT * BAUD_RATE) * (1 + cell_margin(2))) ...
                ];
