@@ -5,9 +5,10 @@ sync_accept_threshold      = 0.900; % Percentage of sync symbol to confirm sync
 subcfar_decision_threshold = 3;
 subcfar_margin             = 0.700;     % Frequency axis only
 
-symbol_length = FS * (1 / BAUD_RATE) / FFT_SHIFT;
-tone_scale    = TONE_SPC * BAUD_RATE / (FS / FFT_SIZE);
-subcfar_delta = round(subcfar_margin * tone_scale);
+symbol_length     = FS * (1 / BAUD_RATE) / FFT_SHIFT;
+tone_scale        = TONE_SPC * BAUD_RATE / (FS / FFT_SIZE);
+subcfar_delta     = round(subcfar_margin * tone_scale);
+sync_accept_count = round(sync_accept_threshold * sync_length);
 
 accepted_counter = 0;
 accepted_frame   = zeros(cell_size(1), cell_size(2), 100);
@@ -25,15 +26,16 @@ for i = 1 : wf_size(1) - cell_size(1)
         signal_level = sum(sum(box));
         % Estimate noise
         box = wfp(subcfar_i - subcfar_delta : subcfar_i - 1, subcfar_j : subcfar_j + symbol_length - 1); % Lower band
-        noise_level = sum(sum(box));
+        noise_level_l = sum(sum(box));
         box = wfp(subcfar_i + tone_scale : subcfar_i + tone_scale + subcfar_delta - 1, subcfar_j : subcfar_j + symbol_length - 1); % Upper band
-        noise_level = noise_level + sum(sum(box));
+        noise_level_h = sum(sum(box));
         % Make decision
-        if signal_level * 2 * subcfar_margin / noise_level >= subcfar_decision_threshold
+        if signal_level * subcfar_margin / noise_level_l >= subcfar_decision_threshold && ...
+           signal_level * subcfar_margin / noise_level_h >= subcfar_decision_threshold
           sync_valid = sync_valid + 1;
         end % Sub-CFAR counter
       end % For each synchronisation symbols
-      if sync_valid / sync_length >= sync_accept_threshold
+      if sync_valid >= sync_accept_count
         % Frame synchronised
         accepted_counter = accepted_counter + 1;
         accepted_frame(:, :, accepted_counter) = wfp(i : i + cell_size(1) - 1, j : j + cell_size(2) - 1);
