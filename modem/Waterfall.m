@@ -3,7 +3,7 @@ function [wfall2d] = Waterfall(waveform, window_size, window_shift)
 
   window = hamming(window_size); % Hamming window
 %   window = ones(window_size, 1); % Square window
-  
+
   ncycles = floor(length(waveform) / window_shift) - floor(window_size / window_shift);
   wfall2d = zeros(window_size, ncycles);
   waveform_size = size(waveform);
@@ -21,7 +21,7 @@ function [wfall2d] = Waterfall(waveform, window_size, window_shift)
 
   wfall2d = wfall2d(1: floor(window_size / 2), :);
   wfall2d = Normalise(wfall2d);
-  
+
   close(w);
 end
 
