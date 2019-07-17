@@ -6,30 +6,41 @@ subcfar_decision_threshold = 3;
 
 symbol_length     = FS * (1 / BAUD_RATE) / FFT_SHIFT;
 tone_scale        = TONE_SPC * BAUD_RATE / (FS / FFT_SIZE);
-subcfar_delta     = round(subcfar_margin * tone_scale);
+tone_scale_centre = round(0.5 * tone_scale);
 sync_accept_count = round(sync_accept_threshold * sync_length);
-
 accepted_counter = 0;
 accepted_frame   = zeros(cell_size(1), cell_size(2), 100);
 
 for i = 1 : wf_size(1) - cell_size(1)
   for j = 1 : wf_size(2) - cell_size(2)
     if snr_map_bin(i, j) == 1
+%     if isequal([i, j], [265,1097])
       % 1st stage CFAR detected.
       sync_valid = 0;
       data_demod = zeros(DATA_LENGTH, 1);
       data_demod_ptr = 0;
       sync_demod_ptr = 0;
+      freq_offset = 0;
+      % Reset LPF
+      Slide_LPF(0, true);
+      align_i = i;
       for msg_i = 1 : msg_length
+        align_i = Constrain(align_i + round(Slide_LPF(freq_offset, false)), ...
+                            1, wf_size(1) - tone_scale * NCARRIERS - 1);
         % Select box and do cell integration
-        box = wfp(i : i + tone_scale * NCARRIERS - 1, ...
-          j + (msg_i - 1) * symbol_length : j + msg_i * symbol_length - 1);
+        box = wfp(align_i : align_i + tone_scale * NCARRIERS - 1, ...
+                  j + (msg_i - 1) * symbol_length : j + msg_i * symbol_length - 1);
         subcfar_result = zeros(NCARRIERS, 1);
         for subcfar_i = 1 : NCARRIERS
           cfar_box = box((subcfar_i - 1) * tone_scale + 1 : subcfar_i * tone_scale, :);
           subcfar_result(subcfar_i) = sum(sum(cfar_box));
         end % NCAR sub-CFAR's
         [subcfar_peak_val, subcfar_peak_loc] = max(subcfar_result);
+        % Find frequency offset for next alignment
+        align_box = box((subcfar_peak_loc - 1) * tone_scale + 1: subcfar_peak_loc * tone_scale, ...
+                        :);
+        [align_peak_val, align_peak_loc] = max(sum(align_box, 2));
+        freq_offset = align_peak_loc - tone_scale_centre;
         % Box is data or sync?
         if mod(msg_i, (SYNC_INTERVAL + 1)) ~= 1  % Is data symbol, register peak only
           data_demod_ptr = data_demod_ptr + 1;
