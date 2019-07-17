@@ -22,13 +22,14 @@ for i = 1 : wf_size(1) - cell_size(1)
       sync_demod_ptr = 0;
       for msg_i = 1 : msg_length
         % Select box and do cell integration
-        box = wfp(i : i + tone_scale * NCARRIERS - 1, j : j + symbol_length - 1);
+        box = wfp(i : i + tone_scale * NCARRIERS - 1, ...
+          j + (msg_i - 1) * symbol_length : j + msg_i * symbol_length - 1);
         subcfar_result = zeros(NCARRIERS, 1);
         for subcfar_i = 1 : NCARRIERS
           cfar_box = box((subcfar_i - 1) * tone_scale + 1 : subcfar_i * tone_scale, :);
           subcfar_result(subcfar_i) = sum(sum(cfar_box));
-          [subcfar_peak_val, subcfar_peak_loc] = max(subcfar_result);
         end % NCAR sub-CFAR's
+        [subcfar_peak_val, subcfar_peak_loc] = max(subcfar_result);
         % Box is data or sync?
         if mod(msg_i, (SYNC_INTERVAL + 1)) ~= 1  % Is data symbol, register peak only
           data_demod_ptr = data_demod_ptr + 1;
