@@ -26,7 +26,7 @@ for i = 1 : wf_size(1) - cell_size(1)
         subcfar_result = zeros(NCARRIERS, 1);
         for subcfar_i = 1 : NCARRIERS
           cfar_box = box((subcfar_i - 1) * tone_scale + 1 : subcfar_i * tone_scale, :);
-          subcfar_result(subcfar_i) = sum(sum(box));
+          subcfar_result(subcfar_i) = sum(sum(cfar_box));
           [subcfar_peak_val, subcfar_peak_loc] = max(subcfar_result);
         end % NCAR sub-CFAR's
         % Box is data or sync?
