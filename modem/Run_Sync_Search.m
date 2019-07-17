@@ -23,22 +23,22 @@ for i = 1 : wf_size(1) - cell_size(1)
       for msg_i = 1 : msg_length
         % Select box and do cell integration
         box = wfp(i : i + tone_scale * NCARRIERS - 1, j : j + symbol_length - 1);
-        subcfar_result = zeros(NCARRIER, 1);
+        subcfar_result = zeros(NCARRIERS, 1);
         for subcfar_i = 1 : NCARRIERS
-          cfar_box = box((subcfar_i - 1) * tone_scale : subcfar_i * tone_scale - 1, :);
+          cfar_box = box((subcfar_i - 1) * tone_scale + 1 : subcfar_i * tone_scale, :);
           subcfar_result(subcfar_i) = sum(sum(box));
           [subcfar_peak_val, subcfar_peak_loc] = max(subcfar_result);
         end % NCAR sub-CFAR's
         % Box is data or sync?
-        if mod(i, (SYNC_INTERVAL + 1)) ~= 1  % Is data symbol, register peak only
+        if mod(msg_i, (SYNC_INTERVAL + 1)) ~= 1  % Is data symbol, register peak only
           data_demod_ptr = data_demod_ptr + 1;
           data_demod(data_demod_ptr) = subcfar_peak_loc;
         else % Is sync symbol, run CFAR-like detection
           sync_demod_ptr = sync_demod_ptr + 1;
-          if subcfar_peak_loc = SYNC_PATTERN(sync_demod_ptr)
+          if subcfar_peak_loc == SYNC_PATTERN(sync_demod_ptr)
             subcfar_mask = subcfar_result;
             subcfar_mask(subcfar_peak_loc) = 0; % Remove maximum
-            if subcfar_peak_val >= subcfar_decision_threshold * max(suncfar_mask)
+            if subcfar_peak_val >= subcfar_decision_threshold * max(subcfar_mask)
               sync_valid = sync_valid + 1;
             end % If CFAR true
           end % If sync position correct
