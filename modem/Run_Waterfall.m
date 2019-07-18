@@ -2,7 +2,7 @@
 Configure;
 
 % Drift parameters A * sin(W * x) + K * x
-drift_a = 5;
+drift_a = 3;
 drift_w = 1e-2;
 drift_k = 5e-4;
 
