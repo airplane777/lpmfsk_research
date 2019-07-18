@@ -3,18 +3,19 @@
 % Parameters
 sync_accept_threshold      = 0.900; % Percentage of sync symbol to confirm sync
 subcfar_decision_threshold = 3;
+buf_size                   = 20;
 
 symbol_length     = FS * (1 / BAUD_RATE) / FFT_SHIFT;
 tone_scale        = TONE_SPC * BAUD_RATE / (FS / FFT_SIZE);
 tone_scale_centre = round(0.5 * tone_scale);
 sync_accept_count = round(sync_accept_threshold * sync_length);
-accepted_counter = 0;
-accepted_frame   = zeros(cell_size(1), cell_size(2), 100);
+accepted_counter  = 0;
+accepted_data     = zeros(DATA_LENGTH, buf_size);
+% accepted_frame   = zeros(cell_size(1), cell_size(2), buf_size);
 
 for i = 1 : wf_size(1) - cell_size(1)
   for j = 1 : wf_size(2) - cell_size(2)
     if snr_map_bin(i, j) == 1
-%     if isequal([i, j], [265,1097])
       % 1st stage CFAR detected.
       sync_valid = 0;
       data_demod = zeros(DATA_LENGTH, 1);
@@ -57,9 +58,19 @@ for i = 1 : wf_size(1) - cell_size(1)
         end % Data or sync
       end % For each box
       if sync_valid >= sync_accept_count
-        % Frame synchronised
-        accepted_counter = accepted_counter + 1;
-        accepted_frame(:, :, accepted_counter) = wfp(i : i + cell_size(1) - 1, j : j + cell_size(2) - 1);
+        % Frame synchronised, save data
+        save_flag = true;
+        for buf_i = 1 : buf_size
+          if isequal(data_demod, accepted_data(:, buf_i))
+            save_flag = false;
+            break
+          end
+        end
+        if save_flag
+          accepted_counter = accepted_counter + 1;
+          accepted_data(:, accepted_counter) = data_demod;
+        end
+%         accepted_frame(:, :, accepted_counter) = wfp(i : i + cell_size(1) - 1, j : j + cell_size(2) - 1);
       end % Save synchronised frame
     end % If CFAR detected
   end
