@@ -13,6 +13,7 @@ accepted_counter  = 0;
 accepted_data     = zeros(DATA_LENGTH, buf_size);
 % accepted_frame   = zeros(cell_size(1), cell_size(2), buf_size);
 
+tic;
 for i = 1 : wf_size(1) - cell_size(1)
   for j = 1 : wf_size(2) - cell_size(2)
     if snr_map_bin(i, j) == 1
@@ -78,4 +79,4 @@ for i = 1 : wf_size(1) - cell_size(1)
 end % For each pixel
 
 close(w);
-
+toc;

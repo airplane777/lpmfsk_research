@@ -16,6 +16,7 @@ cell_size    = [1 + floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE) * (
 guard_size   = floor(guard_margin .* cell_size);
 train_size   = floor(train_margin .* cell_size);
 
+tic;
 % Generate background noise heatmap(power)
 fprintf("Computing background noise profile...\n");
 bg_window_size = cell_size + 2 .* (guard_size + train_size);
@@ -54,3 +55,4 @@ for i = 1 : wf_size(1) - cell_size(1)
 end
 
 close(w);
+toc;
