@@ -16,12 +16,10 @@ function [wfall2d] = Waterfall(waveform, window_size, window_shift)
     subseq_start = (i - 1) * window_shift + 1;
     subseq_end = subseq_start + window_size - 1;
     wfall2d(:, i) = abs(fft(window .* waveform(subseq_start: subseq_end)));
-    w = waitbar(i / ncycles);
   end
 
   wfall2d = wfall2d(1: floor(window_size / 2), :);
   wfall2d = Normalise(wfall2d);
 
-  close(w);
 end
 
