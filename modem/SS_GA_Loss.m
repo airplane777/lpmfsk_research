@@ -35,7 +35,7 @@ function [sidelobe] = SS_GA_Loss(sync_pattern)
     data = randi([1 NCARRIERS], 1, DATA_LENGTH);
 
     % Insert synchronise symbols
-    msg      = [];
+    msg      = zeros(1, msg_length);
     msg_ptr  = 0;
     data_ptr = 0;
     sync_ptr = 0;
@@ -70,7 +70,7 @@ function [sidelobe] = SS_GA_Loss(sync_pattern)
     wfp = wf .^ 2;
     % imagesc(amp2db(wf));
 
-
+    sub_snr = zeros(wf_size(1) - cell_size(1) - 2 * subcfar_delta, wf_size(2) - cell_size(2));
     % Calculate sidelobe power
     for i = 1 + subcfar_delta : wf_size(1) - cell_size(1) - subcfar_delta
       for j = 1 : wf_size(2) - cell_size(2)
@@ -86,11 +86,12 @@ function [sidelobe] = SS_GA_Loss(sync_pattern)
           box = wfp(subcfar_i + tone_scale : subcfar_i + tone_scale + subcfar_delta - 1, subcfar_j : subcfar_j + symbol_length - 1); % Upper band
           noise_level_h = sum(sum(box));
           % Add result to sidelobe
-          sidelobe = sidelobe + (signal_level * 2 / (noise_level_l + noise_level_h));
+          sub_snr(i - subcfar_delta, j) = signal_level * 2 / (noise_level_l + noise_level_h);
         end % For each sync symbol
       end
     end % For each pixel
+    sidelobe = sidelobe - (max(max(sub_snr)) - mean(mean(sub_snr)));
   end % For each test message
-  sidelobe = sidelobe / ntestmsg;
+  sidelobe = sidelobe;
 end
 
