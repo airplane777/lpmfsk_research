@@ -14,7 +14,7 @@ function [sidelobe] = SS_GA_Loss(sync_pattern)
   amplitude_s    = 0.5;
   awgn_snr       = 20;
   subcfar_margin = 0.700;        % Frequency axis only
-  ntestmsg       = 3;
+  ntestmsg       = 5;
 
   cell_margin   = [0.000 0.000]; % Frequency, Time
   sync_length   = floor(DATA_LENGTH / SYNC_INTERVAL) + 1;
@@ -29,7 +29,7 @@ function [sidelobe] = SS_GA_Loss(sync_pattern)
   % Initialise sidelobe
   sidelobe = 0;
 
-  % Test with 3 messages
+  % Test with N messages
   for testmsg_i = 1 : ntestmsg
     % Generate random message
     data = randi([1 NCARRIERS], 1, DATA_LENGTH);
