@@ -1,7 +1,7 @@
 sync_length = floor(DATA_LENGTH / SYNC_INTERVAL) + 1;
 range_max = ones(1, sync_length) .* NCARRIERS;
 range_min = ones(1, sync_length);
-IntCon = 1 : sync_length
+IntCon = 1 : sync_length;
 
 options = gaoptimset( ...
 'Display', 'iter', ...
