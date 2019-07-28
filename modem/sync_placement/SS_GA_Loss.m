@@ -1,30 +1,30 @@
 function [sidelobe] = SS_GA_Loss(sync_pattern)
   % Modulation parameters
-  FS            = 44100;         % Sampling rate
-  NCARRIERS     = 8;             % Number of carriers
-  TONE_SPC      = 8;             % Tone spacing factor
-  BAUD_RATE     = 10;            % Symbols per second
-  DATA_LENGTH   = 50;            % Length of message(temporary)
-  SYNC_INTERVAL = 3;             % Data symbols between sync symbols
-  FFT_SIZE      = 4410;          % FFT window length
-                                 % Resolution of waterfall on frequency axis
-  FFT_SHIFT     = 441;           % FFT window shift step
-                                 % Resolution of waterfall on time axis
+  FS             = 44100;         % Sampling rate
+  NCARRIERS      = 8;             % Number of carriers
+  TONE_SPC       = 8;             % Tone spacing factor
+  BAUD_RATE      = 10;            % Symbols per second
+  DATA_LENGTH    = 50;            % Length of message(temporary)
+  SYNC_INTERVAL  = 3;             % Data symbols between sync symbols
+  FFT_SIZE       = 4410;          % FFT window length
+                                  % Resolution of waterfall on frequency axis
+  FFT_SHIFT      = 441;           % FFT window shift step
+                                  % Resolution of waterfall on time axis
   bottom_freq    = 4000;
   amplitude_s    = 0.5;
   awgn_snr       = 20;
-  subcfar_margin = 0.700;        % Frequency axis only
+  subcfar_margin = 0.700;         % Frequency axis only
   ntestmsg       = 5;
 
-  cell_margin   = [0.000 0.000]; % Frequency, Time
-  sync_length   = floor(DATA_LENGTH / SYNC_INTERVAL) + 1;
-  msg_length    = DATA_LENGTH + sync_length;
-  symbol_length = FS * (1 / BAUD_RATE) / FFT_SHIFT;
-  tone_scale    = TONE_SPC * BAUD_RATE / (FS / FFT_SIZE);
-  subcfar_delta = round(subcfar_margin * tone_scale);
-  cell_size     = [1 + floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE) * (1 + cell_margin(1))) ...
-    1 + floor((FS * msg_length) / (FFT_SHIFT * BAUD_RATE) * (1 + cell_margin(2))) ...
-    ];
+  cell_margin    = [0.000 0.000]; % Frequency, Time
+  sync_length    = floor(DATA_LENGTH / SYNC_INTERVAL) + 1;
+  msg_length     = DATA_LENGTH + sync_length;
+  symbol_length  = FS * (1 / BAUD_RATE) / FFT_SHIFT;
+  tone_scale     = TONE_SPC * BAUD_RATE / (FS / FFT_SIZE);
+  subcfar_delta  = round(subcfar_margin * tone_scale);
+  cell_size      = [1 + floor(TONE_SPC * BAUD_RATE * NCARRIERS / (FS / FFT_SIZE) * (1 + cell_margin(1))) ...
+                             1 + floor((FS * msg_length) / (FFT_SHIFT * BAUD_RATE) * (1 + cell_margin(2))) ...
+                   ];
 
   % Initialise sidelobe
   sidelobe = 0;
@@ -57,8 +57,8 @@ function [sidelobe] = SS_GA_Loss(sync_pattern)
 
     % Pad wav with zeros
     wav_size = size(wav);
-    pad = zeros(1, wav_size(2));
-    wav = [pad wav pad];
+    pad      = zeros(1, wav_size(2));
+    wav      = [pad wav pad];
 
     % Add noise
     wav = awgn(wav, awgn_snr);
