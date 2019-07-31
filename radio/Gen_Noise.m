@@ -11,8 +11,9 @@ band_f   = [band1_f band2_f band3_f];
 band_f_log = log10(band_f);
 band_fa  = [band1_fa band2_fa band3_fa];
 
-[noise, gof] = Noise_Fit(band_f_log, band_fa);
+[fa, gof] = Noise_Fit(band_f_log, band_fa);
 
-figure
-semilogx(band_f, band_fa);
-grid on;
+% figure
+% semilogx(band_f, band_fa);
+% grid on;
+

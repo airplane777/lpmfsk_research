@@ -27,12 +27,12 @@ opts.StartPoint = [0 0 0 0 0 0 0 0 0 0 0 0 0 0.785398163397448];
 [fitresult, gof] = fit( xData, yData, ft, opts );
 
 % Plot fit with data.
-figure( 'Name', 'Band' );
-h = plot( fitresult, xData, yData );
-legend( h, 'band_fa vs. band_f_log', 'Band', 'Location', 'NorthEast' );
-% Label axes
-xlabel band_f_log
-ylabel band_fa
-grid on
+% figure( 'Name', 'Band' );
+% h = plot( fitresult, xData, yData );
+% legend( h, 'band_fa vs. band_f_log', 'Band', 'Location', 'NorthEast' );
+% % Label axes
+% xlabel band_f_log
+% ylabel band_fa
+% grid on
 
 
