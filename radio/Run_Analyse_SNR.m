@@ -1,7 +1,7 @@
-FREQ_RANGE = 4e6 : 0.1e6 : 14e6; % Hz
+FREQ_RANGE = 1e6 : 0.5e6 : 30e6; % Hz
 DIST_RANGE = 100 : 10 : 5000;   % m
-P_TX       = +30;                % dBm
-G_TX       = -20;                % dBi
+P_TX       = +11;                % dBm
+G_TX       = -40;                % dBi
 G_RX       = +3;                 % dBi
 BW         = 400;                % Hz
 
