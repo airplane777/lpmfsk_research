@@ -5,12 +5,12 @@ mu_0       = 1.2566e-6;  % Magnetic constant
 epsilon_0  = 8.8542e-12; % Electric constant
 epsilon_rg = 80;         % Water + NaCl
 sigma_g    = 4;          % S/m, water + NaCl
-current    = 0.01;       % A, antenna current at centre
-he         = 0.2;        % m, antenna half length
+current    = 0.005;       % A, antenna current at centre
+he         = 0.1;        % m, antenna half length
 
 FREQ_RANGE      = 4e6 : 1e6 : 30e6; % Hz
 freq_range_size = size(FREQ_RANGE);
-DIST_RANGE      = 100 : 50 : 5000;    % m
+DIST_RANGE      = 100 : 50 : 10000;    % m
 dist_range_size = size(DIST_RANGE);
 
 % Malloc
@@ -35,14 +35,19 @@ for i = 1 : freq_range_size(2)
     if d > dc % In spherical range
       b(i, j) = nil;
     elseif d < di % In plannar range, near area
-      b(i, j) = abs(- ((1i * k2 * mu_0 * current * he) / (2 * pi)) * ...
-                      ((exp(1i * k2 * d)) / (d)));
+      b(i, j) = - ((1i * k2 * mu_0 * current * he) / (2 * pi)) * ...
+                      ((exp(1i * k2 * d)) / (d));
       else % In plannar range, far area
-        b(i, j) = abs(((mu_0 * k1 ^ 2 * current * he) / (2 * pi * k2 ^ 2)) * ...
-                      ((exp(1i * k2 * d)) / (d ^ 2)));
+        b(i, j) = ((mu_0 * k1 ^ 2 * current * he) / (2 * pi * k2 ^ 2)) * ...
+                      ((exp(1i * k2 * d)) / (d ^ 2));
     end % Phase 3
+    % Modelling RX, convert magnetic induction to electrical signal
+    e = abs((-2 * pi * f / k1) * b);
   end % For i(freq)
 end % For j(dist)
+
+% Convert E to dBm
+db_signal = 20 .* log10(e) + 30;
 
 figure;
 hold on;
@@ -50,8 +55,8 @@ plot(FREQ_RANGE, dc);
 plot(FREQ_RANGE, di);
 
 figure;
-mesh(DIST_RANGE, FREQ_RANGE, b);
+mesh(DIST_RANGE, FREQ_RANGE, db_signal);
 % axis([DIST_RANGE(1) DIST_RANGE(end) FREQ_RANGE(1) FREQ_RANGE(end)]);
 xlabel('Distance(m)');
 ylabel('Frequency(Hz)');
-zlabel('B');
+zlabel('dBm');
