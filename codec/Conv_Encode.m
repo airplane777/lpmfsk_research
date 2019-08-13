@@ -1,4 +1,4 @@
-function [conv_out] = Conv(conv_in)
+function [conv_out] = Conv_Encode(conv_in)
   % Parameters
   constraint	= 3;
   r		= 2;
