@@ -1,10 +1,10 @@
 % testbox_position = [616 260]; % Quiet
-testbox_position = [135 755];
+% testbox_position = [135 755];
+% 
+% testbox = wfp(testbox_position(1) : testbox_position(1) + cell_size(1), ...
+%   testbox_position(2) : testbox_position(2) + cell_size(2));
 
-testbox = wfp(testbox_position(1) : testbox_position(1) + cell_size(1), ...
-  testbox_position(2) : testbox_position(2) + cell_size(2));
-
-% testbox = accepted_frame(:, :, 2);
+testbox = accepted_frame(:, :, 1);
 
 testbox_size = size(testbox);
 int_time = zeros(testbox_size(1), 1);
@@ -24,24 +24,24 @@ for j = 1 : testbox_size(2)
   end
 end
 
-subplot(2, 2, 1)
-imagesc(testbox)
+subplot(1, 2, 1)
+imagesc(pwr2db(testbox))
 title('Spectrogram')
 
-subplot(2, 2, 2)
+subplot(1, 2, 2)
 plot(int_time)
 xlim([1 testbox_size(1)])
 view([90 90])
 title('Projection on frequency axis')
 
-subplot(2, 2, 3)
-plot(int_freq)
-xlim([1 testbox_size(2)])
-title('Projection on time axis')
-
-subplot(2, 2, 4)
-findpeaks(int_time, 'npeaks', NCARRIERS, 'sortstr', 'descend');
-title('Peak detection')
+% subplot(2, 2, 3)
+% plot(int_freq)
+% xlim([1 testbox_size(2)])
+% title('Projection on time axis')
+% 
+% subplot(2, 2, 4)
+% findpeaks(int_time, 'npeaks', NCARRIERS, 'sortstr', 'descend');
+% title('Peak detection')
 
 % Test demodulation
 demod_waveform = zeros(1, testbox_size(2));
