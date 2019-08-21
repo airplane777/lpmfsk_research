@@ -15,3 +15,5 @@ FFT_SHIFT = 882;          % FFT window shift step
                           % Resolution of waterfall on time axis
 TGT_BAND  = [1100 12000]; % Detection target frequency band
 
+% Cross-correlation parameters
+HEADER_PATTERN = [1 8 2 7 3 6 4 5];
