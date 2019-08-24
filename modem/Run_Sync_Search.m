@@ -3,7 +3,7 @@
 % Parameters
 sync_accept_threshold      = 0.900; % Percentage of sync symbol to confirm sync
 subcfar_decision_threshold = 3;
-buf_size                   = 20;
+buf_size                   = 100;
 
 symbol_length     = FS * (1 / BAUD_RATE) / FFT_SHIFT;
 tone_scale        = TONE_SPC * BAUD_RATE / (FS / FFT_SIZE);
@@ -11,6 +11,7 @@ tone_scale_centre = round(0.5 * tone_scale);
 sync_accept_count = round(sync_accept_threshold * sync_length);
 accepted_counter  = 0;
 accepted_data     = zeros(DATA_LENGTH, buf_size);
+accepted_vote     = ones(1, buf_size);
 % accepted_frame   = zeros(cell_size(1), cell_size(2), buf_size);
 
 tic;
@@ -63,6 +64,7 @@ for i = 1 : wf_size(1) - cell_size(1)
         save_flag = true;
         for buf_i = 1 : buf_size
           if isequal(data_demod, accepted_data(:, buf_i))
+            accepted_vote(buf_i) = accepted_vote(buf_i) + 1;
             save_flag = false;
             break
           end
