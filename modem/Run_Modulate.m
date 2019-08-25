@@ -2,11 +2,12 @@
 Configure;
 
 % Modulation parameters
-bottom_freq     = 1000;
-amplitude       = 0.2;
+bottom_freq     = 10000;
+amplitude       = 1;
 
 % Generate random message
-data = randi([1 NCARRIERS], 1, DATA_LENGTH);
+% data = randi([1 NCARRIERS], 1, DATA_LENGTH);
+data = tgtm';
 
 % Insert synchronise symbols
 msg      = [];
@@ -30,8 +31,8 @@ wav = Modulate(FS, NCARRIERS, BAUD_RATE, bottom_freq, TONE_SPC, msg);
 wav = amplitude * wav;
 
 % Plot spectrogram
-wf = Waterfall(wav, FFT_SIZE, FFT_SHIFT);
-imagesc(amp2db(wf));
+% wf = Waterfall(wav, FFT_SIZE, FFT_SHIFT);
+% imagesc(amp2db(wf));
 
 % Play and save audio
 % sound(wav, FS);
