@@ -14,7 +14,11 @@ tgtm = gray2oct(code); % tgtm length 153
 % Perform BER-SNR test
 Run_Modulate;
 wav = [zeros(1, 4410) wav zeros(1, 8820)];
-trials = 30;
+
+snr = -19 : 0.1 : -14;
+snr_size = size(snr);
+ser = zeros(1, snr_size(2));
+trials = 300;
 
 tic
 for p = 1 : snr_size(2)
