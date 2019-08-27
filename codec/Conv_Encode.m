@@ -19,5 +19,4 @@ function [conv_out] = Conv_Encode(conv_in)
 				  )), 2);
     end
   end
-  
 end

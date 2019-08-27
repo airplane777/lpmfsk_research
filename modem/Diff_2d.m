@@ -1,5 +1,4 @@
 function [diff] = Diff_2d(pattern, template)
-
   % Calculate diff range
   assert(isequal(size(pattern), size(template)), 'Pattern and template have different size.');
   diff_range = size(template);
